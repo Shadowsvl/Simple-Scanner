@@ -24,9 +24,9 @@ class ScannerViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             scanRepository.getLatestScan().collectLatest { scan ->
-                if (scan.rawScanValue.isNotBlank()) {
+                if (scan.displayValue.isNotBlank()) {
                     scanRepository.pauseScan()
-                    vmState.update { it.copy( scanText = scan.rawScanValue, showBottomSheet = true ) }
+                    vmState.update { it.copy( scan = scan, showBottomSheet = true ) }
                 }
             }
         }

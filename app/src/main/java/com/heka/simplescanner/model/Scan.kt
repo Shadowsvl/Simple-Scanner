@@ -1,11 +1,14 @@
 package com.heka.simplescanner.model
 
+import androidx.annotation.StringRes
+
 data class Scan(
-    val rawScanValue: String,
+    val displayValue: String,
+    @StringRes val scanFormatId: Int,
     val scanType: ScanType
 )
 
 enum class ScanType {
-    QR,
-    Barcode
+    Text,
+    Url
 }

@@ -2,25 +2,34 @@ package com.heka.simplescanner.ui.screens.scanner
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.heka.simplescanner.R
+import com.heka.simplescanner.ui.components.ScanSheet
 import com.heka.simplescanner.ui.components.SimpleScannerTopBar
 import com.heka.simplescanner.ui.dialogs.CameraRequiredDialog
 import com.heka.simplescanner.ui.theme.*
@@ -37,8 +46,15 @@ fun ScannerScreen(
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
 
+    val hapticFeedback = LocalHapticFeedback.current
     val activity = remember(context) {
         context as Activity
+    }
+
+    BackHandler(enabled = bottomSheetState.isVisible) {
+        coroutineScope.launch {
+            bottomSheetState.hide()
+        }
     }
 
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -68,6 +84,7 @@ fun ScannerScreen(
 
     SideEffect {
         if (uiState.showBottomSheet) {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
             coroutineScope.launch { if (!bottomSheetState.isVisible) bottomSheetState.show() }
             viewModel.onEvent(ScannerEvent.BottomSheetShown)
         }
@@ -89,7 +106,7 @@ fun ScannerScreen(
     ScannerScreen(
         bottomSheetState = bottomSheetState,
         uiState = uiState,
-        onEvent = viewModel::onEvent
+        context = context
     )
 }
 
@@ -98,35 +115,54 @@ fun ScannerScreen(
 private fun ScannerScreen(
     bottomSheetState: ModalBottomSheetState,
     uiState: ScannerUiState,
-    onEvent: (ScannerEvent) -> Unit
+    context: Context
 ) {
+    val clipboardManager = LocalClipboardManager.current
+    val uriHandler = LocalUriHandler.current
+
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetShape = BottomSheetShape,
+        scrimColor = Color.Transparent,
         sheetContent = {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(SpaceDP),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(BaseDP)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold
+            uiState.scan?.let {
+                ScanSheet(
+                    scan = it,
+                    onShareClicked = {
+                        context.startActivity(
+                            Intent.createChooser(
+                                Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(Intent.EXTRA_TEXT, it.displayValue)
+                                    type = "text/plain"
+                                },
+                                context.getString(R.string.scan_share_value)
+                            )
+                        )
+                    },
+                    onCopyClicked = {
+                        clipboardManager.setText(AnnotatedString(it.displayValue))
+                        Toast.makeText(context, context.getText(R.string.scan_value_copied), Toast.LENGTH_SHORT).show()
+                    },
+                    onWebClicked = {
+                        uriHandler.openUri(it.displayValue)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = BaseDP)
                 )
-                if (uiState.scanText.isNotBlank()) {
-                    Text(
-                        text = uiState.scanText,
-                        style = MaterialTheme.typography.body1
-                    )
-                }
-            }
+            } ?: Text(
+                text = stringResource(id = R.string.app_name),
+                style = MaterialTheme.typography.h6,
+                fontWeight = FontWeight.Bold
+            )
         }
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(color = Black200)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Black200)
+        ) {
             if (uiState.previewView != null) {
                 AndroidView(
                     factory = { uiState.previewView },
@@ -161,7 +197,7 @@ private fun ScannerScreenPreview() {
         ScannerScreen(
             bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden),
             uiState = ScannerUiState(),
-            onEvent = {}
+            context = LocalContext.current
         )
     }
 }

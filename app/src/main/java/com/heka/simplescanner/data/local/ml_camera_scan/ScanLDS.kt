@@ -10,6 +10,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import com.heka.simplescanner.R
 import com.heka.simplescanner.data.mapper.toScan
 import com.heka.simplescanner.data.repository.scan.impl.ScanLocalDataSource
 import com.heka.simplescanner.model.Scan
@@ -48,8 +49,7 @@ class ScanLDS @Inject constructor(
     // ML Scan QR/Barcode
     private val scannerOptions = BarcodeScannerOptions.Builder()
         .setBarcodeFormats(
-            Barcode.FORMAT_QR_CODE,
-            Barcode.FORMAT_CODE_128
+            Barcode.FORMAT_ALL_FORMATS
         )
         .build()
     private val scannerClient = BarcodeScanning.getClient(scannerOptions)
@@ -76,7 +76,11 @@ class ScanLDS @Inject constructor(
                             .first()
                             .toScan()
                     } else {
-                        scanStateFlow.value = Scan(rawScanValue = "", ScanType.QR)
+                        scanStateFlow.value = Scan(
+                            displayValue = "",
+                            scanFormatId = R.string.scan_format_unknown,
+                            ScanType.Text
+                        )
                     }
                 }
                 .addOnFailureListener { e ->
@@ -138,7 +142,11 @@ class ScanLDS @Inject constructor(
             if (cameraProvider.isBound(preview)) {
                 imageAnalysis.clearAnalyzer()
                 cameraProvider.unbindAll()
-                scanStateFlow.value = Scan(rawScanValue = "", ScanType.QR)
+                scanStateFlow.value = Scan(
+                    displayValue = "",
+                    scanFormatId = R.string.scan_format_unknown,
+                    ScanType.Text
+                )
             }
         } catch (e: Exception) {
             e.printStackTrace()

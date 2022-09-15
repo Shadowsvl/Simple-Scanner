@@ -8,6 +8,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,7 +81,7 @@ private fun CameraRequiredContent(
                 Button(
                     onClick = onContinueClicked,
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.primaryVariant
+                        contentColor = Color.White
                     ),
                     modifier = Modifier.weight(0.5f)
                 ) {
