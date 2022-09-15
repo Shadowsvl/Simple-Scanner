@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Simple Scanner</string>
+
+    <!-- Scan screen -->
+    <string name="scan_message">Enfoca un código QR o de Barras</string>
+    <string name="scan_share_value">Compartir contenido</string>
+    <string name="scan_value_copied">Contenido copiado</string>
+
+    <!-- Scan bottom sheet -->
+    <string name="scan_sheet_web_action">Sitio web</string>
+
+    <!-- Camera required dialog -->
+    <string name="camera_required_message">La aplicación requiere el permiso de cámara para su funcionamiento.</string>
+    <string name="camera_required_continue_btn">Continuar</string>
+    <string name="camera_required_exit_btn">Salir</string>
+
+    <!-- Scan formats -->
+    <string name="scan_format_qr_code">Código QR</string>
+    <string name="scan_format_aztec">Código aztec</string>
+    <string name="scan_format_data_matrix">Código de matríz de datos</string>
+    <string name="scan_format_pdf">Código PDF417</string>
+    <string name="scan_format_barcode">Código de barras</string>
+    <string name="scan_format_code_128">Código de barras (128)</string>
+    <string name="scan_format_code_93">Código de barras (93)</string>
+    <string name="scan_format_code_39">Código de barras (39)</string>
+    <string name="scan_format_ean_13">Código de barras EAN-13</string>
+    <string name="scan_format_ean_8">Código de barras EAN-8</string>
+    <string name="scan_format_itf">Código de barras ITF</string>
+    <string name="scan_format_upc_a">Código de barras UPC-A</string>
+    <string name="scan_format_upc_e">Código de barras UPC-E</string>
+    <string name="scan_format_unknown">Código</string>
+
 </resources>
