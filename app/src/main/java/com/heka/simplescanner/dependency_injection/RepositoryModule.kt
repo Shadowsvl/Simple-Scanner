@@ -5,15 +5,15 @@ import com.heka.simplescanner.data.repository.scan.impl.ScanRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Binds
-    @ViewModelScoped
+    @Singleton
     abstract fun bindsScanRepository(
         scanRepositoryImpl: ScanRepositoryImpl
     ): ScanRepository

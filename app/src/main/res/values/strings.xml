@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Simple Scanner</string>
+
+    <string name="scan_message">Enfoca un código QR o de Barras</string>
+
+    <!-- Camera required dialog -->
+    <string name="camera_required_message">La aplicación requiere el permiso de cámara para su funcionamiento.</string>
+    <string name="camera_required_continue_btn">Continuar</string>
+    <string name="camera_required_exit_btn">Salir</string>
 </resources>
