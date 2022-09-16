@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple Scanner</string>
+
+    <!-- Scan screen -->
+    <string name="scan_message">Focus a QR code or Barcode</string>
+    <string name="scan_share_value">Share content</string>
+    <string name="scan_value_copied">Content copied</string>
+
+    <!-- Scan bottom sheet -->
+    <string name="scan_sheet_web_action">Website</string>
+
+    <!-- Camera required dialog -->
+    <string name="camera_required_message">The app requires the camera permission to work.</string>
+    <string name="camera_required_continue_btn">Continue</string>
+    <string name="camera_required_exit_btn">Exit</string>
+
+    <!-- Scan formats -->
+    <string name="scan_format_qr_code">QR code</string>
+    <string name="scan_format_aztec">Aztec code</string>
+    <string name="scan_format_data_matrix">Data matrix code</string>
+    <string name="scan_format_pdf">PDF417 code</string>
+    <string name="scan_format_barcode">Barcode</string>
+    <string name="scan_format_code_128">Barcode (128)</string>
+    <string name="scan_format_code_93">Barcode (93)</string>
+    <string name="scan_format_code_39">Barcode (39)</string>
+    <string name="scan_format_ean_13">EAN-13 barcode</string>
+    <string name="scan_format_ean_8">EAN-8 barcode</string>
+    <string name="scan_format_itf">ITF barcode</string>
+    <string name="scan_format_upc_a">UPC-A barcode</string>
+    <string name="scan_format_upc_e">UPC-E barcode</string>
+    <string name="scan_format_unknown">Code</string>
+
+</resources>
