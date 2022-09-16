@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Simple Scanner</string>
+    <string name="app_name">Escáner Simple</string>
 
     <!-- Scan screen -->
     <string name="scan_message">Enfoca un código QR o de Barras</string>
