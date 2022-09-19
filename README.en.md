@@ -5,6 +5,8 @@ Sample project developed using [Jetpack Compose](https://developer.android.com/j
 QR and barcode scanner, with basic options to quickly share, copy or go to the code website.
 Identifies other code formats.
 
+### [See on Google Play](https://play.google.com/store/apps/details?id=com.heka.simplescanner)
+
 ## Features
 
 The application consists of a main screen with the camera preview, which when focusing on a barcode or QR shows the content text and allows you to share, copy or in case of a url go to the website.
