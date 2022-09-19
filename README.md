@@ -6,6 +6,8 @@ Proyecto desarrollado usando [Jetpack Compose](https://developer.android.com/jet
 Escáner de códigos QR y barras, con opciones básicas para compartir, copiar o ir al sitio web del código.
 Identifica otros formatos de código.
 
+### [Ver en Google Play](https://play.google.com/store/apps/details?id=com.heka.simplescanner)
+
 ## Características
 
 La aplicación consta de una pantalla principal con la vista prévia de la cámara, que al enfocar un código de barras o QR muestra el texto del contenido y permite compartir, copiar o en caso de una url ir al sitio web.
